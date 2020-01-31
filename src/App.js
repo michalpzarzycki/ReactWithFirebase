@@ -6,23 +6,29 @@ import ForgotPassword from './components/Auth/ForgotPassword';
 import SearchLinks from './components/Link/SearchLinks';
 import LinkList from './components/Link/LinkList';
 import LinkDetail from './components/Link/LinkDetail';
+import Header from './components/Header'
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-    <BrowserRouter>
-    <Switch>
-      <Route exact path="/" render={()=><Redirect to="/new/1"/>}/>
-      <Route path="/create" component={CreateLink}/>
-      <Route path="/login" component={Login}/>
-      <Route path="/forgot" component={ForgotPassword}/>
-      <Route path="/search" component={SearchLinks}/>
-      <Route path="/top" component={LinkList}/>
-      <Route path="/new/:page" component={LinkList}/>
-      <Route path="/link/:linkId" component={LinkDetail}/>
-    </Switch>
-    </BrowserRouter>
+      <BrowserRouter>
+        <div className="app-container">
+          <Header />
+          <div className="route-container">
+            <Switch>
+              <Route exact path="/" render={() => <Redirect to="/new/1" />} />
+              <Route path="/create" component={CreateLink} />
+              <Route path="/login" component={Login} />
+              <Route path="/forgot" component={ForgotPassword} />
+              <Route path="/search" component={SearchLinks} />
+              <Route path="/top" component={LinkList} />
+              <Route path="/new/:page" component={LinkList} />
+              <Route path="/link/:linkId" component={LinkDetail} />
+            </Switch>
+          </div>
+        </div>
+      </BrowserRouter>
     </div>
   );
 }
