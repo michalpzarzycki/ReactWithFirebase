@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import useFormValidation from './useFormValidation'
+import validateLogin from './validateLogin'
 const INITIAL_STATE = {
     name: "",
     email: "",
     password: ""
 }
 const Login = () => {
-    const { handleChange, handleSubmit, values } = useFormValidation(INITIAL_STATE);
+    const { handleChange, handleSubmit, values } = useFormValidation(INITIAL_STATE, validateLogin);
     const [login, setLogin] = useState(true);
 
     return (

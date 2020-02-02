@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const useFormValidation = (initialState) => {
+const useFormValidation = (initialState, validate) => {
 
     const [values, setValues] = useState(initialState)
 
@@ -13,6 +13,7 @@ const useFormValidation = (initialState) => {
     }
     const handleSubmit = (event) => {
       event.preventDefault();
+      validate(values)
       console.log({ values })
     }
  return { handleChange, handleSubmit, values }
