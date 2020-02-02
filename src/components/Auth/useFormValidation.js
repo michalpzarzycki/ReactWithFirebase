@@ -1,8 +1,23 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 const useFormValidation = (initialState, validate) => {
 
     const [values, setValues] = useState(initialState)
+    const [errors, setErrors] = useState({})
+    const [isSubmitting, setSubmitting] = useState(false);
+
+     useEffect(()=>{
+         if(isSubmitting) {
+             const noErrors = Object.keys(errors).length===0;
+             if(noErrors){
+                 console.log("Auth", values)
+                 setSubmitting(false)
+             } else {
+                 setSubmitting(false)
+             }
+         }
+     },[errors])
+
 
     const handleChange = (event) => {
         event.persist();
@@ -11,12 +26,17 @@ const useFormValidation = (initialState, validate) => {
             [event.target.name]: event.target.value
         }))
     }
+    const handleBlur = () => {
+        const validationErrors = validate(values)
+        setErrors(validationErrors)
+    }
     const handleSubmit = (event) => {
       event.preventDefault();
-      validate(values)
+      const validationErrors = validate(values)
+      setSubmitting(true)
       console.log({ values })
     }
- return { handleChange, handleSubmit, values }
+ return { handleChange, handleSubmit, handleBlur, errors, isSubmitting, values }
 }
 
 export default useFormValidation;
