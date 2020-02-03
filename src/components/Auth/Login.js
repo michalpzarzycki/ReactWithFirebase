@@ -10,11 +10,18 @@ const INITIAL_STATE = {
 const Login = () => {
     const { handleChange, handleSubmit, handleBlur, errors, isSubmitting, values } = useFormValidation(INITIAL_STATE, validateLogin, authenticateUser);
     const [login, setLogin] = useState(true);
+    const [firebaseError, setFirebaseError] = useState(null)
 
      async function authenticateUser() {
-       const { name, email, password } = values;
-     const response = login ? await firebase.login(email, password) : await firebase.register(name, email, password)
-     console.log({response})
+         try{
+            const { name, email, password } = values;
+            const response = login ? await firebase.login(email, password) : await firebase.register(name, email, password)
+         } catch(err) {
+               console.error('Auhentication erroor', err)
+               setFirebaseError(true)
+         }
+       
+  
     } 
 
     return (
@@ -45,6 +52,7 @@ const Login = () => {
                     onChange={handleChange}
                     onBlur={handleBlur} />
                     {errors.password && <p>{errors.password}</p>}
+                    {firebaseError && <p>Zły login lub hasło</p>}
 
                 <div>
                     <button type="submit" onClick={handleSubmit}>SUBMIT</button>
