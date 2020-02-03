@@ -22,15 +22,15 @@ const { user, firebase } = React.useContext(FirebaseContext)
                     search
                 </NavLink>
                 <div className="divider">|</div>
-                <NavLink to="/create" className="header-link">
+              {user &&  <NavLink to="/create" className="header-link">
                     submit
-                </NavLink>
+                </NavLink>}
             </div>
-            <div classname="flex">
+            <div className="flex">
                {user ?  <React.Fragment>
                         <div>{user.displayName}</div>
                         <div>|</div>
-                        <div>logout</div>
+                        <div onClick={()=>firebase.logout()}>logout</div>
                     </React.Fragment> : <NavLink to="/login" className="header-link">
                     login
                 </NavLink>}
