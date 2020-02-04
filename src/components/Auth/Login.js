@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import useFormValidation from './useFormValidation'
 import validateLogin from './validateLogin'
 import firebase from '../../firebase/firebase'
+import { Link } from 'react-router-dom'
 const INITIAL_STATE = {
     name: "",
     email: "",
@@ -62,6 +63,9 @@ const Login = (props) => {
                     </button>
                 </div>
             </form>
+            <div>
+                <Link to='/forgot'>Zapomniałeś hasła?</Link>
+            </div>
         </div>
     )
 }
