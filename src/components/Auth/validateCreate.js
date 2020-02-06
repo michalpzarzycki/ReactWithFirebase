@@ -1,6 +1,6 @@
 export default function validateCreate(values) {
     let errors = {}
-
+     console.log("validateCreateVALUES : ", values)
     //Email errors
     if(!values.description) {
         errors.description = "Description required!"
@@ -13,6 +13,6 @@ export default function validateCreate(values) {
     } else if(!/^(ftp|http|https):\/\/[^ '']+$/.test(values.url)) {
         errors.url = "Bøédny url"
     }
-
+    console.log("validateCreate ERROR: ", errors)
     return errors;
 }

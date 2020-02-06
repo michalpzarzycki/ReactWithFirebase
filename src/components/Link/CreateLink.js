@@ -20,7 +20,8 @@ function handleCreateLink() {
             onChange={handleChange}
             value={values.description}
             type="text"/>
-            {errors.description && <p>{errors.description}</p>}
+            {console.log(errors)}
+            {errors.description && <p>ERROR: {errors.description}</p>}
                <input 
             name="url"
             placeholder="The URL for the link"
