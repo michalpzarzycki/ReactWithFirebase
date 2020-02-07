@@ -1,13 +1,29 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
-const LinkItem = ({ link, index, showCount}) => {
-
+import FirebaseContext from '../../firebase/context';
+const LinkItem = ({ link, index, showCount, history}) => {
+const { firebase, user } =React.useContext(FirebaseContext)
+    function handleVote() {
+        if(!user) {
+history.push('/login')
+        } else {
+            const voteRef = firebase.db.collection('links').doc(link.id)
+            voteRef.get().then(doc => {
+                if(doc.exists) {
+                    const previousVotes = doc.data().votes;
+                    const vote = { votedBy: { id: user.uid, name: user.displayName} }
+                    const updatedVotes = [...previousVotes, vote];
+                    voteRef.update({ votes: updatedVotes })
+                }
+            })
+        }
+    }
     return(
         <div>
             <div>
     {showCount && <span>{index}</span>}
-    <div>
+    <div onClick={handleVote}>
         ^
     </div>
     <div>
@@ -24,4 +40,4 @@ const LinkItem = ({ link, index, showCount}) => {
     )
 }
 
-export default LinkItem
+export default withRouter(LinkItem)
