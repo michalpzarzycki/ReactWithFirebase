@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import FirebaseContext from '../../firebase/context';
+import LinkItem from './LinkItem';
 
 const LinkList = (props) => {
   const { firebase } = React.useContext(FirebaseContext);
+  const [links, setLinks] = useState([]);
 
   React.useEffect(()=>{
       getLinks()
@@ -17,10 +19,14 @@ const LinkList = (props) => {
 const links = snapshot.docs.map(doc => {
     return { id:doc.id, ...doc.data() }
 })
-console.log({ links })
+ setLinks(links);
   }
     return(
-        <div>LinkList</div>
+        <div>
+            {links.map((link, index) => {
+              return  <LinkItem key={link.id} showCount={true} link={link} index={index+1}/>
+            })}
+        </div>
     )
 }
 
