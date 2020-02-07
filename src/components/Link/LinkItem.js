@@ -19,6 +19,19 @@ history.push('/login')
             })
         }
     }
+    function handleDelete() {
+        const linkRef = firebase.db.collection('links').doc(link.id)
+        linkRef.delete().then(() => {
+            console.log(`Document with id ${link.id} deleted`)
+        })
+        .catch(err => {
+            console.error("Error deleting document", err)
+        })
+
+    }
+
+const postedByAuthUser = user&& user.id ===link.postedBy.id
+
     return(
         <div>
             <div>
@@ -35,6 +48,11 @@ history.push('/login')
     <Link to={`/link/${link.id}`}>
         {link.comments.length > 0 ? `${link.comments.length} comments` : "discuss"}
     </Link>
+    {postedByAuthUser && (
+        <> 
+        <span onClick={handleDelete}>DELETE</span>
+        </>
+    )}
             </div>
         </div>
     )
