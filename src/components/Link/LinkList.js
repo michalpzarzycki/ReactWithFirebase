@@ -18,7 +18,7 @@ const LinkList = (props) => {
 
   function handleSnapshot(snapshot) {
 const links = snapshot.docs.map(doc => {
-    return { id:doc.id, ...doc.data() }
+    return { uid:doc.id, ...doc.data() }
 })
  setLinks(links);
   }
